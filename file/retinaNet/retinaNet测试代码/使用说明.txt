@@ -1,0 +1,36 @@
+
+step1:
+	将test_new.sh放到Detectron的根目录(Detectron_root)下，
+	将test_net_new.py放到Detectron_root/tools目录下，
+	使用logging.py替换Detectron_root/lib/utils/logging.py。
+	
+step2:
+	./test_new.sh
+	
+	备注：修改网络结构.yaml文件()、模型model_iter9999.pkl路径等
+		模型路径下有多少个模型就测试多少个。
+	
+
+备注：
+	打印的部分日志保存在testzj.log文件，在测试过程中不能随意删除该文件。
+	
+	
+测试结果保存在：根据当天时间以及测试的数据集命名的
+	2018-05-21_('coco_2007_val',).txt
+	2018-05-21_('coco_2007_train',).txt
+
+	内容如下：
+		model_iter89999.pkl
+		('coco_2007_val',) 2018-05-21 03:24:57.956852
+		 62.765s		#总耗时
+		0.5429	0.8858	0.5918	0.1103	0.5188	0.6207		#AP、AP50、AP75、APs、APm、APl
+		class AP:		#每个类别的AP
+		 60.4
+		 56.1
+		 70.5
+		 52.1
+		 45.0
+		 53.4
+		 42.4
+	最终只需将上面的内容复制到word文档的对应位置。
+	
