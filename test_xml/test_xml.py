@@ -252,7 +252,7 @@ class Xml():
         doc.writexml(tmpfile, addindent=self.INDENT,newl = '\n',encoding = 'utf-8')
         tmpfile.close()
 
-def main(cfg_path,weights_path,input_imagespath,output_image,output_xmlpath,output_orig_image):
+def main(cfg_path,weights_path,input_imagespath,output_image,output_xmlpath):
     #check path
     if not os.path.exists(input_imagespath):
         print ("input_imagespath is not exist!!!")
@@ -301,7 +301,10 @@ def main(cfg_path,weights_path,input_imagespath,output_image,output_xmlpath,outp
                 xml.xml(output_xmlpath,xmlfile,datalist,img_size)
             #plot
             if PLOT:
-                re_image = os.path.join(replot_input_imagespath,file)                
+                re_image = os.path.join(output_image,file)
+                if not os.path.exists(re_image):
+                    re_image = os.path.join(input_imagespath,file)
+                    
                 re_img_np = cv2.imread(re_image)
                 for j in xrange(len(datalist)):
                     singledata = {}
@@ -330,16 +333,13 @@ def main(cfg_path,weights_path,input_imagespath,output_image,output_xmlpath,outp
                     #cv2.putText(re_img_np, str(strscore) + '('+str(xmin)+','+ str(ymin)+','+str(xmax)+','+str(ymax)+')', (xmin,ymin), font, 0.5,(0,0,255),1)
                 print(os.path.join(output_image,file))
                 cv2.imwrite(os.path.join(output_image,file), re_img_np)
-                #cv2.imwrite(os.path.join(output_orig_image,file), img_np)
     print(num_no_target)
     
 if __name__ == '__main__':
 
-    cfg_path = '/opt/ligang/Detectron/test_xml/model/retinanet_88_149999.yaml'  #retinanet_76_139999.yaml#retinanet_46_24999_infrared.yaml' 
-    weights_path = '/opt/ligang/Detectron/test_xml/model/model_88_149999.pkl'  # model_76_139999.pkl  model_46_24999_infrared.pkl'  
-    input_imagespath = '/opt/ligang/Detectron/test_xml/img2'
-    replot_input_imagespath = '/opt/ligang/Detectron/test_xml/img2' #img
-    output_image     = '/opt/ligang/Detectron/test_xml/out2'
-    output_xmlpath   = '/opt/ligang/Detectron/test_xml/xml2'
-    output_orig_image     = '/opt/ligang/Detectron/test_xml/out2'
-    main(cfg_path,weights_path,input_imagespath,output_image,output_xmlpath,output_orig_image)
+    cfg_path = '/opt/zhangjing/Detectron/test_xml/model/retinanet_94_129999.yaml'  #retinanet_76_139999.yaml#retinanet_46_24999_infrared.yaml' 
+    weights_path = '/opt/zhangjing/Detectron/test_xml/model/model_94_129999.pkl'  # model_76_139999.pkl  model_46_24999_infrared.pkl'  
+    input_imagespath = '/opt/zhangjing/Detectron/test_xml/img9'
+    output_image     = '/opt/zhangjing/Detectron/test_xml/out9'
+    output_xmlpath   = '/opt/zhangjing/Detectron/test_xml/xml9'
+    main(cfg_path,weights_path,input_imagespath,output_image,output_xmlpath)
