@@ -132,7 +132,7 @@ def test_result(logPath,classNum,fw):
 				modelLst.append( l4 )
 			
 			#存放数据集名称
-			if l.startswith("INFO test_engine.py: 322: Wrote detections to:"):
+			if l.startswith("INFO test_engine.py: 320: Wrote detections to:"):
 				lst = l.strip().split(":")
 				l2 = lst[-1]
 				lst2 = l2.strip().split("/")
@@ -357,13 +357,13 @@ if __name__ == '__main__':
 	fw = open(testResult_Path, 'a')
 	classNum = cfg.MODEL.NUM_CLASSES-1
 	model_lst_all,dataset_lst_all,classAP_lst_all,recall_lst_all,ap_lst_all,ap50_lst_all,ap75_lst_all,aps_lst_all,apm_lst_all,apl_lst_all= test_result(logName,classNum,fw)
-	'''print ('\n')
-	print (model_lst_all)
-	print (dataset_lst_all)
-	print (recall_lst_all)
+	print ('\n')
+	print ("model:", model_lst_all)
+	print ("dataset:", dataset_lst_all)
+	print ("recall:", recall_lst_all)
 	print ("classAP: ", classAP_lst_all)
 	print ("ap: ", ap_lst_all)
-	print ('\n') #'''
+	print ('\n') #''''''
 	
 		
 	process_result(model_lst_all,dataset_lst_all,classAP_lst_all,recall_lst_all,ap_lst_all,ap50_lst_all,ap75_lst_all,aps_lst_all,apm_lst_all,apl_lst_all)
