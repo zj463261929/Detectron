@@ -71,15 +71,12 @@ def initialize_gpu_from_weights_file(model, weights_file, gpu_id=0):
     unscoped_param_names = OrderedDict()  # Print these out in model order
     #print(model.params)
     for blob in model.params:
-        
         unscoped_param_names[c2_utils.UnscopeName(str(blob))] = True
-        '''
-        keyname = c2_utils.UnscopeName(str(blob))
+        '''keyname = c2_utils.UnscopeName(str(blob))
         if (keyname == 'retnet_cls_pred_fpn3_w' or keyname == 'retnet_cls_pred_fpn3_b'
         or keyname == 'retnet_bbox_pred_fpn3_w' or keyname == 'retnet_bbox_pred_fpn3_b'):
             continue
         unscoped_param_names[keyname] = True'''
-        
     with c2_utils.NamedCudaScope(gpu_id):
         #print(unscoped_param_names.keys())
         for unscoped_param_name in unscoped_param_names.keys():
@@ -95,46 +92,10 @@ def initialize_gpu_from_weights_file(model, weights_file, gpu_id=0):
                     unscoped_param_name.find(']_') + 2:]
             else:
                 src_name = unscoped_param_name
-            #print(src_name)            
-                     
+            #print(src_name)
             if src_name not in src_blobs:
                 logger.info('{:s} not found'.format(src_name))
-                print('{} not found'.format(src_name))
-                #continue
-                if src_name == 'retnet_cls_conv_n0_fpn2_w':
-                    src_name = 'retnet_cls_conv_n0_fpn3_w'
-                elif src_name == 'retnet_cls_conv_n0_fpn2_b':
-                    src_name = 'retnet_cls_conv_n0_fpn3_b'
-                elif src_name == 'retnet_cls_conv_n1_fpn2_w':
-                    src_name = 'retnet_cls_conv_n1_fpn3_w'
-                elif src_name == 'retnet_cls_conv_n1_fpn2_b':
-                    src_name = 'retnet_cls_conv_n1_fpn3_b'
-                elif src_name == 'retnet_cls_conv_n2_fpn2_w':
-                    src_name = 'retnet_cls_conv_n2_fpn3_w'
-                elif src_name == 'retnet_cls_conv_n2_fpn2_b':
-                    src_name = 'retnet_cls_conv_n2_fpn3_b'
-                elif src_name == 'retnet_cls_conv_n3_fpn2_w':
-                    src_name = 'retnet_cls_conv_n3_fpn3_w'
-                elif src_name == 'retnet_cls_conv_n3_fpn2_b':
-                    src_name = 'retnet_cls_conv_n3_fpn3_b'                                
-                elif src_name == 'retnet_bbox_conv_n0_fpn2_w':
-                    src_name = 'retnet_bbox_conv_n0_fpn3_w'
-                elif src_name == 'retnet_bbox_conv_n0_fpn2_b':
-                    src_name = 'retnet_bbox_conv_n0_fpn3_b'
-                elif src_name == 'retnet_bbox_conv_n1_fpn2_w':
-                    src_name = 'retnet_bbox_conv_n1_fpn3_w'
-                elif src_name == 'retnet_bbox_conv_n1_fpn2_b':
-                    src_name = 'retnet_bbox_conv_n1_fpn3_b'
-                elif src_name == 'retnet_bbox_conv_n2_fpn2_w':
-                    src_name = 'retnet_bbox_conv_n2_fpn3_w'
-                elif src_name == 'retnet_bbox_conv_n2_fpn2_b':
-                    src_name = 'retnet_bbox_conv_n2_fpn3_b'
-                elif src_name == 'retnet_bbox_conv_n3_fpn2_w':
-                    src_name = 'retnet_bbox_conv_n3_fpn3_w'
-                elif src_name == 'retnet_bbox_conv_n3_fpn2_b':
-                    src_name = 'retnet_bbox_conv_n3_fpn3_b'                
-                else:
-                    continue
+                continue
             dst_name = core.ScopedName(unscoped_param_name)
             has_momentum = src_name + '_momentum' in src_blobs
             has_momentum_str = ' [+ momentum]' if has_momentum else ''
@@ -149,8 +110,8 @@ def initialize_gpu_from_weights_file(model, weights_file, gpu_id=0):
                 # If the blob is already in the workspace, make sure that it
                 # matches the shape of the loaded blob
                 ws_blob = workspace.FetchBlob(dst_name)
-                print(dst_name,ws_blob.shape)
-                print(src_name,src_blobs[src_name].shape)
+                #print(dst_name,ws_blob.shape)
+                #print(src_name,src_blobs[src_name].shape)
                 assert ws_blob.shape == src_blobs[src_name].shape, \
                     ('Workspace blob {} with shape {} does not match '
                      'weights file shape {}').format(
@@ -172,7 +133,7 @@ def initialize_gpu_from_weights_file(model, weights_file, gpu_id=0):
     # feature allows for alternating optimization of Faster R-CNN in which blobs
     # unused by one step can still be preserved forward and used to initialize
     # another step.
-    '''for src_name in src_blobs.keys():
+    for src_name in src_blobs.keys():
         if (src_name not in unscoped_param_names and
                 not src_name.endswith('_momentum') and
                 src_blobs[src_name] is not None):
@@ -180,7 +141,7 @@ def initialize_gpu_from_weights_file(model, weights_file, gpu_id=0):
                 workspace.FeedBlob(
                     '__preserve__/{:s}'.format(src_name), src_blobs[src_name])
                 logger.debug(
-                    '{:s} preserved in workspace (unused)'.format(src_name))'''
+                    '{:s} preserved in workspace (unused)'.format(src_name))
 
 
 def save_model_to_weights_file(weights_file, model):
@@ -264,13 +225,11 @@ def print_net(model, namescope='gpu_0'):
     op_list = model.net.Proto().op
     for op in op_list:
         input_name = op.input
-        #print('input_name:{}'.format(input_name))
         # For simplicity: only print the first output
         # Not recommended if there are split layers
         output_name = str(op.output[0])
         op_type = op.type
         op_name = op.name
-        #print("op_name:{}".format(op_name))
 
         if namescope is None or output_name.startswith(namescope):
             # Only print the forward pass network
@@ -289,13 +248,9 @@ def print_net(model, namescope='gpu_0'):
             op_label = op_type + (op_name if op_name == '' else ':' + op_name)
             suffix = ' ------- (op: {})'.format(op_label)
             for j in range(len(input_name)):
-                #print("input_name:{},j:{}".format(input_name[j],j))
                 if input_name[j] in model.params:
-                    #print(input_name[j])
-                    input_blob1 = workspace.FetchBlob(input_name[j])                    
                     continue
                 input_blob = workspace.FetchBlob(input_name[j])
-                #print(input_name[j])
                 if isinstance(input_blob, np.ndarray):
                     input_shape = input_blob.shape
                     logger.info('{:28s}: {:20s} => {:28s}: {:20s}{}'.format(

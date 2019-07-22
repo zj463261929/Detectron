@@ -121,9 +121,11 @@ def voc_eval(detpath,
     imageset = os.path.splitext(os.path.basename(imagesetfile))[0]
     cachefile = os.path.join(cachedir, imageset + '_annots.pkl')
     # read list of images
+    
     with open(imagesetfile, 'r') as f:
         lines = f.readlines()
     imagenames = [x.strip() for x in lines]
+    
 
     if not os.path.isfile(cachefile):
         # load annots
@@ -156,10 +158,12 @@ def voc_eval(detpath,
                                  'difficult': difficult,
                                  'det': det}
 
-    # read dets
+    # read dets    
     detfile = detpath.format(classname)
+    #print(detfile)
     with open(detfile, 'r') as f:
         lines = f.readlines()
+        #print(lines)
 
     splitlines = [x.strip().split(' ') for x in lines]
     image_ids = [x[0] for x in splitlines]
@@ -170,6 +174,7 @@ def voc_eval(detpath,
     sorted_ind = np.argsort(-confidence)
     BB = BB[sorted_ind, :]
     image_ids = [image_ids[x] for x in sorted_ind]
+    #print(image_ids)
 
     # go down dets and mark TPs and FPs
     nd = len(image_ids)

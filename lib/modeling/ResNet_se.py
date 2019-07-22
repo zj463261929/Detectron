@@ -24,6 +24,8 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 from core.config import cfg
+from utils.c2 import const_fill
+from utils.c2 import gauss_fill
 
 # ---------------------------------------------------------------------------- #
 # Bits for specific architectures (ResNet50, ResNet101, ...)
@@ -86,7 +88,7 @@ def add_stage(
     return blob_in, dim_in
 
 
-def add_ResNet_convX_body(model, block_counts, freeze_at=2): #freeze_at=2
+def add_ResNet_convX_body(model, block_counts, freeze_at=0):
     """Add a ResNet body from input data up through the res5 (aka conv5) stage.
     The final res5/conv5 stage may be optionally excluded (hence convX, where
     X = 4 or 5)."""
@@ -98,19 +100,19 @@ def add_ResNet_convX_body(model, block_counts, freeze_at=2): #freeze_at=2
     dim_in = 64
     dim_bottleneck = cfg.RESNETS.NUM_GROUPS * cfg.RESNETS.WIDTH_PER_GROUP
     (n1, n2, n3) = block_counts[:3]
-    print (p)
     s, dim_in = add_stage(model, 'res2', p, n1, dim_in, 256, dim_bottleneck, 1)
-
     if freeze_at == 2:
         print("freeze_at 2")
         model.StopGradient(s, s)
-    s, dim_in = add_stage(model, 'res3', s, n2, dim_in, 512, dim_bottleneck * 2, 1)
-
+    s, dim_in = add_stage(
+        model, 'res3', s, n2, dim_in, 512, dim_bottleneck * 2, 1
+    )
     if freeze_at == 3:
         print("freeze_at 3")
         model.StopGradient(s, s)
-    s, dim_in = add_stage(model, 'res4', s, n3, dim_in, 1024, dim_bottleneck * 4, 1
-)
+    s, dim_in = add_stage(
+        model, 'res4', s, n3, dim_in, 1024, dim_bottleneck * 4, 1
+    )
     if freeze_at == 4:
         print("freeze_at 4")
         model.StopGradient(s, s)
@@ -120,11 +122,9 @@ def add_ResNet_convX_body(model, block_counts, freeze_at=2): #freeze_at=2
             model, 'res5', s, n4, dim_in, 2048, dim_bottleneck * 8,
             cfg.RESNETS.RES5_DILATION
         )
-
         if freeze_at == 5:
             print("freeze_at 5")            
             model.StopGradient(s, s)
-
         return s, dim_in, 1. / 32. * cfg.RESNETS.RES5_DILATION
     else:
         return s, dim_in, 1. / 16.
@@ -274,5 +274,24 @@ def bottleneck_transformation(
         stride=1,
         pad=0,
         inplace=False
-    )
+    )    
+    
+    SE_poo1 = model.AveragePool(cur,prefix+'_branch2c_se_pool',global_pooling=1)
+    
+    SE_conv = model.Conv(SE_poo1,  prefix + '_branch2c_se_con1', dim_out, int(dim_out/16), kernel=1,  
+                    stride=1, pad=0, weight_init=gauss_fill(0.01),  bias_init=const_fill(0.0))
+    
+    SE_conv = model.Relu(SE_conv,SE_conv)
+    
+    SE_conv = model.Conv(SE_conv,  prefix + '_branch2c_se_con2',   int(dim_out/16), dim_out,
+                    kernel=1,  stride=1,  pad=0,  weight_init=gauss_fill(0.01),  bias_init=const_fill(0.0))
+    
+    SE_sig = model.net.Sigmoid(SE_conv, SE_conv)
+    
+    #SE = model.net.Scale([SE_sig])
+    
+    cur = model.net.Mul([cur, SE_sig], prefix + '_branch2c_se', broadcast=1)
+    
+    #cur = model.net.Add([cur,SE], cur, broadcast=1, axis=1,2)       
+    
     return cur

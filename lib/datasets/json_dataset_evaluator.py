@@ -133,9 +133,9 @@ def evaluate_boxes(
         res_file += '_{}'.format(str(uuid.uuid4()))
     res_file += '.json'
     _write_coco_bbox_results_file(json_dataset, all_boxes, res_file)
-    # Only do evaluation on non-test sets (annotations are undisclosed on test)
+    # Only do evaluation on non-test sets (annotations are undisclosed on test)   
     if json_dataset.name.find('test') == -1:
-        coco_eval = _do_detection_eval(json_dataset, res_file, output_dir)
+        coco_eval = _do_detection_eval(json_dataset, res_file, output_dir)       
     else:
         coco_eval = None
     # Optionally cleanup results json file
@@ -229,9 +229,18 @@ def _log_detection_eval_metrics(json_dataset, coco_eval):
             ind_lo:(ind_hi + 1), :, cls_ind - 1, 0, 2]
         ap = np.mean(precision[precision > -1])
         logger.info('{:.1f}'.format(100 * ap))
+    '''logger.infer(str(coco_eval.eval['recall']))
+    recall = coco_eval.eval['recall'][IoU_lo_thresh:, :, 0, 2]
+    recall_default = np.mean(recall[recall > -1])
+    logger.info(
+        '~~~~ recall @ IoU=[{:.2f},{:.2f}] ~~~~'.format(
+            IoU_lo_thresh, IoU_hi_thresh))
+    logger.info('{:.1f}'.format(100 * recall_default))'''
+    
     logger.info('~~~~ Summary metrics ~~~~')
     coco_eval.summarize()
-
+    
+    
 
 def evaluate_box_proposals(
     json_dataset, roidb, thresholds=None, area='all', limit=None

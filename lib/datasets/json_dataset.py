@@ -68,6 +68,7 @@ class JsonDataset(object):
         )
         self.COCO = COCO(DATASETS[name][ANN_FN])
         self.debug_timer = Timer()
+
         # Set up dataset classes
         category_ids = self.COCO.getCatIds()
         categories = [c['name'] for c in self.COCO.loadCats(category_ids)]
@@ -102,7 +103,9 @@ class JsonDataset(object):
             'Crowd filter threshold must be 0 if ground-truth annotations ' \
             'are not included.'
         image_ids = self.COCO.getImgIds()
+        #print(image_ids)
         image_ids.sort()
+        #print(image_ids)
         roidb = copy.deepcopy(self.COCO.loadImgs(image_ids))
         for entry in roidb:
             self._prep_roidb_entry(entry)

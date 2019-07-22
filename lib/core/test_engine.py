@@ -237,6 +237,7 @@ def test_net(
     num_classes = cfg.MODEL.NUM_CLASSES
     all_boxes, all_segms, all_keyps = empty_results(num_classes, num_images)
     timers = defaultdict(Timer)
+    #net_utils.print_net(model)
     for i, entry in enumerate(roidb):
         if cfg.TEST.PRECOMPUTED_PROPOSALS:
             # The roidb may contain ground-truth rois (for example, if the roidb
@@ -300,7 +301,8 @@ def test_net(
                 thresh=cfg.VIS_TH,
                 box_alpha=0.8,
                 dataset=dataset,
-                show_class=True
+                show_class=True,
+                ext='jpg'
             )
 
     cfg_yaml = yaml.dump(cfg)

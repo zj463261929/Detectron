@@ -64,9 +64,12 @@ def _write_voc_results_files(json_dataset, all_boxes, salt):
         image_index = [x.strip() for x in f.readlines()]
     # Sanity check that order of images in json dataset matches order in the
     # image set
+    print(image_set_path)
     roidb = json_dataset.get_roidb()
     for i, entry in enumerate(roidb):
         index = os.path.splitext(os.path.split(entry['image'])[1])[0]
+        #print(index)
+        #print(image_index[i])
         assert index == image_index[i]
     for cls_ind, cls in enumerate(json_dataset.classes):
         if cls == '__background__':

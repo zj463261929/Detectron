@@ -85,19 +85,7 @@ DATASETS = {
             _DATA_DIR + '/coco/coco_val2014',
         ANN_FN:
             _DATA_DIR + '/coco/annotations/instances_valminusminival2014.json'
-    },
-    'coco_2015_test': {
-        IM_DIR:
-            _DATA_DIR + '/coco/coco_test2015',
-        ANN_FN:
-            _DATA_DIR + '/coco/annotations/image_info_test2015.json'
-    },
-    'coco_2015_test-dev': {
-        IM_DIR:
-            _DATA_DIR + '/coco/coco_test2015',
-        ANN_FN:
-            _DATA_DIR + '/coco/annotations/image_info_test-dev2015.json'
-    },
+    },   
     'coco_2017_test': {  # 2017 test uses 2015 test images
         IM_DIR:
             _DATA_DIR + '/coco/coco_test2015',
@@ -161,29 +149,302 @@ DATASETS = {
             _DATA_DIR + '/coco/coco_test2015',
         ANN_FN:
             _DATA_DIR + '/coco/annotations/image_info_test-dev2015.json'
-    },
-    'voc_2007_trainval': {
+    },    
+    'voc_2007_val': {
         IM_DIR:
-            _DATA_DIR + '/VOC2007/JPEGImages',
+            '/gds/train-data/oilstealing/data/illbuild/VOCdevkit2007/VOC2007/JPEGImages',
         ANN_FN:
-            _DATA_DIR + '/VOC2007/annotations/voc_2007_trainval.json',
+            '/gds/train-data/oilstealing/data/illbuild/voc_illbuild_val_new.json',
         DEVKIT_DIR:
-            _DATA_DIR + '/VOC2007/VOCdevkit2007'
-    },
-    'voc_2007_test': {
+            '/gds/train-data/oilstealing/data/illbuild/VOCdevkit2007/'
+    },     
+    'voc_2007_train_new': {
         IM_DIR:
-            _DATA_DIR + '/VOC2007/JPEGImages',
+            '/opt/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages_aug',
         ANN_FN:
-            _DATA_DIR + '/VOC2007/annotations/voc_2007_test.json',
+            '/opt/oil_vehicle_person_10cls/voc_oil_train_color_and_gray_new.json',
         DEVKIT_DIR:
-            _DATA_DIR + '/VOC2007/VOCdevkit2007'
-    },
-    'voc_2012_trainval': {
+            '/opt/oil_vehicle_person_10cls/VOCdevkit2007/'
+    }, 
+    'voc_2007_train_infrared': {
         IM_DIR:
-            _DATA_DIR + '/VOC2012/JPEGImages',
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007/VOC2007/JPEGImages',
         ANN_FN:
-            _DATA_DIR + '/VOC2012/annotations/voc_2012_trainval.json',
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/train_75673.json',
         DEVKIT_DIR:
-            _DATA_DIR + '/VOC2012/VOCdevkit2012'
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007'
+    },
+	'coco_2007_val_infrared': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007/VOC2007/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/val_75673.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007'
+    },
+	'coco_2007_trainval_infrared': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007/VOC2007/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/trainval_75673.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007'
+    },
+    'voc_2007_train1': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/img_all_tower_brickspile',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/train_tower_brickspile.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    },
+    'coco_2007_trainval1': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/img_all_tower_brickspile',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/train_tower_brickspile.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    },
+    'coco_2007_val1': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/img_all_tower_brickspile',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/val_tower_brickspile.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    },
+	'voc_2007_train': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/train_104832.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    },	
+    'coco_2007_val': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/val_color_clear.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    },
+    'coco_2007_trainval': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/trainval_color_clear.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    },
+	'coco_2007_benchmark_50': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007/VOC2007/JPEGImages_benchmark',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/benchmark_50.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007'
+    },
+    'coco_2007_benchmark_day_269': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages_benchmark_c14_day_269',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/benchmark_day_269.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    },
+    'coco_2007_benchmark_day200': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages_benchmark_day200',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/benchmark_day200.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    },
+    'coco_2007_benchmark_night150': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages_benchmark_night150',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/benchmark_night150.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    },
+    'coco_2007_benchmark_night_129': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages_benchmark_c14_night_129',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/benchmark_night_129.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    },
+    'coco_2015_benchmark_night_new': {
+        IM_DIR:
+            '/opt/Detectron/data/JPEGImages_benchmark_night_new',
+        ANN_FN:
+            '/opt/Detectron/data/benchmark_night_new.json'       
+    }, 
+    'coco_2015_benchmark100_oil': {
+        IM_DIR:
+            '/opt/Detectron/data/JPEGImages_benchmark_new',
+        ANN_FN:
+            '/opt/Detectron/data/benchmark_new.json'       
+    },
+    'coco_2015_benchmark100_oil_gray': {
+        IM_DIR:
+            '/opt/Detectron/data/JPEGImages_benchmark_new_gray',
+        ANN_FN:
+            '/opt/Detectron/data/benchmark_new.json'       
+    },
+    'coco_2015_yushan_cls12': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/data/illbuild_class12/VOCdevkit2007/VOC2007/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/oilstealing/data/illbuild_class12/voc_illbuild_train.json'       
     }
+    ,
+	'coco_2007_benchmark_50': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007/VOC2007/JPEGImages_benchmark',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/benchmark_50.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007'
+    },	
+    'coco_2007_move_infrared': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007/VOC2007/JPEGImages_move',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/test_1176.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007'
+    },
+	'coco_2007_benchmark_608': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007/VOC2007/JPEGImages_benchmark_608',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/benchmark_608.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007'
+    },
+    'coco_2007_benchmark_230': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007/VOC2007/JPEGImages_benchmark_230',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/benchmark_230.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007'
+    },
+    'voc_2007_train_infrared_separate': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/sequence_oilinfrared/data/oil_infrared_all/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/oilstealing/sequence_oilinfrared/data/oil_infrared_all/train_separate.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007'
+    },
+    'coco_2007_trainval_infrared_separate': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/sequence_oilinfrared/data/oil_infrared_all/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/oilstealing/sequence_oilinfrared/data/oil_infrared_all/trainval_separate.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007'
+    },
+    'coco_2007_val_infrared_separate': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/sequence_oilinfrared/data/oil_infrared_all/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/oilstealing/sequence_oilinfrared/data/oil_infrared_all/val_separate.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls_infrared/VOCdevkit2007'
+    },
+    'voc_2007_train_1cls': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/train_77607_1cls.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    },	
+    'coco_2007_trainval_1cls': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/trainval_77607_1cls.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    },
+    'coco_2007_val_1cls': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/val_77607_1cls.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    },    
+    'coco_2007_train_14cls_crop': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages_crop',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/train_crop_8972.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    }, 
+    'coco_2007_val_14cls_crop': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages_crop',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/val_crop_996.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    }
+    ,    
+    'voc_2007_train_jinjiang': {
+        IM_DIR:
+            '/gds/train-data/hainan/jinjiang/VOCdevkit2007/VOC2007/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/hainan/jinjiang/train_100238.json',
+        DEVKIT_DIR:
+            '/gds/train-data/hainan/jinjiang/VOCdevkit2007'
+    },    
+    'coco_2007_trainval_jinjiang': {
+        IM_DIR:
+            '/gds/train-data/hainan/jinjiang/VOCdevkit2007/VOC2007/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/hainan/jinjiang/trainval_100238.json',
+        DEVKIT_DIR:
+            '/gds/train-data/hainan/jinjiang/VOCdevkit2007'
+    },    
+    'coco_2007_val_jinjiang': {
+        IM_DIR:
+            '/gds/train-data/hainan/jinjiang/VOCdevkit2007/VOC2007/JPEGImages',
+        ANN_FN:
+            '/gds/train-data/hainan/jinjiang/val_100238.json',
+        DEVKIT_DIR:
+            '/gds/train-data/hainan/jinjiang/VOCdevkit2007'
+    } ,    
+    'coco_2007_val_jiuquan': {
+        IM_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007/VOC2007/JPEGImages_jiuquan',
+        ANN_FN:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/jiuquan_2420.json',
+        DEVKIT_DIR:
+            '/gds/train-data/oilstealing/oil_vehicle_person_10cls/VOCdevkit2007'
+    } 
 }
+
+''''coco_2015_test-dev': {
+        IM_DIR:
+            _DATA_DIR + '/coco/coco_test2015',
+        ANN_FN:
+            _DATA_DIR + '/coco/annotations/image_info_test-dev2015.json'
+    },
+        'coco_2015_test': {
+        IM_DIR:
+            _DATA_DIR + '/coco/coco_test2015',
+        ANN_FN:
+            _DATA_DIR + '/coco/annotations/image_info_test2015.json'
+    }, 
+    
+    '''

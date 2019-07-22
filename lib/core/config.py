@@ -535,7 +535,7 @@ __C.RETINANET.SOFTMAX = False
 
 # Inference cls score threshold, anchors with score > INFERENCE_TH are
 # considered for inference
-__C.RETINANET.INFERENCE_TH = 0.05
+__C.RETINANET.INFERENCE_TH = 0.05   #default:0.05
 
 
 # ---------------------------------------------------------------------------- #
@@ -922,10 +922,10 @@ __C.MEMONGER = True
 __C.MEMONGER_SHARE_ACTIVATIONS = False
 
 # Dump detection visualizations
-__C.VIS = False
+__C.VIS = False #True
 
 # Score threshold for visualization
-__C.VIS_TH = 0.9
+__C.VIS_TH = 0.3
 
 # Expected results should take the form of a list of expectations, each
 # specified by four elements (dataset, task, metric, expected value). For

@@ -86,7 +86,7 @@ def add_stage(
     return blob_in, dim_in
 
 
-def add_ResNet_convX_body(model, block_counts, freeze_at=2): #freeze_at=2
+def add_ResNet_convX_body(model, block_counts, freeze_at=0):
     """Add a ResNet body from input data up through the res5 (aka conv5) stage.
     The final res5/conv5 stage may be optionally excluded (hence convX, where
     X = 4 or 5)."""
@@ -98,19 +98,19 @@ def add_ResNet_convX_body(model, block_counts, freeze_at=2): #freeze_at=2
     dim_in = 64
     dim_bottleneck = cfg.RESNETS.NUM_GROUPS * cfg.RESNETS.WIDTH_PER_GROUP
     (n1, n2, n3) = block_counts[:3]
-    print (p)
     s, dim_in = add_stage(model, 'res2', p, n1, dim_in, 256, dim_bottleneck, 1)
-
     if freeze_at == 2:
         print("freeze_at 2")
         model.StopGradient(s, s)
-    s, dim_in = add_stage(model, 'res3', s, n2, dim_in, 512, dim_bottleneck * 2, 1)
-
+    s, dim_in = add_stage(
+        model, 'res3', s, n2, dim_in, 512, dim_bottleneck * 2, 1
+    )
     if freeze_at == 3:
         print("freeze_at 3")
         model.StopGradient(s, s)
-    s, dim_in = add_stage(model, 'res4', s, n3, dim_in, 1024, dim_bottleneck * 4, 1
-)
+    s, dim_in = add_stage(
+        model, 'res4', s, n3, dim_in, 1024, dim_bottleneck * 4, 1
+    )
     if freeze_at == 4:
         print("freeze_at 4")
         model.StopGradient(s, s)
@@ -120,11 +120,9 @@ def add_ResNet_convX_body(model, block_counts, freeze_at=2): #freeze_at=2
             model, 'res5', s, n4, dim_in, 2048, dim_bottleneck * 8,
             cfg.RESNETS.RES5_DILATION
         )
-
         if freeze_at == 5:
             print("freeze_at 5")            
             model.StopGradient(s, s)
-
         return s, dim_in, 1. / 32. * cfg.RESNETS.RES5_DILATION
     else:
         return s, dim_in, 1. / 16.
@@ -237,27 +235,30 @@ def bottleneck_transformation(
     # conv 1x1 -> BN -> ReLU
     cur = model.ConvAffine(
         blob_in,
-        prefix + '_branch2a',
+        prefix + '_branch2aG',
         dim_in,
         dim_inner,
         kernel=1,
         stride=str1x1,
         pad=0,
+        group=8,
         inplace=True
     )
     cur = model.Relu(cur, cur)
+    
+    cur=model.net.ChannelShuffle(cur, prefix + '_shuffle',kernel=1, group=8)
 
     # conv 3x3 -> BN -> ReLU
     cur = model.ConvAffine(
         cur,
-        prefix + '_branch2b',
+        prefix + '_branch2b_shuffle',
         dim_inner,
         dim_inner,
         kernel=3,
         stride=str3x3,
         pad=1 * dilation,
         dilation=dilation,
-        group=group,   #moblenet group=dim_inner else group=group
+        group=dim_inner,   #moblenet group=dim_inner else group=group
         inplace=True
     )
     cur = model.Relu(cur, cur)
@@ -267,12 +268,13 @@ def bottleneck_transformation(
     # gradient computation for graphs like this
     cur = model.ConvAffine(
         cur,
-        prefix + '_branch2c',
+        prefix + '_branch2cG',
         dim_inner,
         dim_out,
         kernel=1,
         stride=1,
         pad=0,
+        group=8,
         inplace=False
     )
     return cur

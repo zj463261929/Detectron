@@ -102,7 +102,7 @@ def create_model():
     checkpoints = {}
     output_dir = get_output_dir(cfg.TRAIN.DATASETS, training=True)
     weights_file = cfg.TRAIN.WEIGHTS
-    if cfg.TRAIN.AUTO_RESUME:
+    if cfg.TRAIN.AUTO_RESUME: #
         # Check for the final model (indicates training already finished)
         final_path = os.path.join(output_dir, 'model_final.pkl')
         if os.path.exists(final_path):
@@ -129,7 +129,7 @@ def create_model():
             )
 
     logger.info('Building model: {}'.format(cfg.MODEL.TYPE))
-    model = model_builder.create(cfg.MODEL.TYPE, train=True)
+    model = model_builder.create(cfg.MODEL.TYPE, train=True) #cfg.MODEL.TYPE=retinanet
     if cfg.MEMONGER:
         optimize_memory(model)
     # Performs random weight initialization as defined by the model

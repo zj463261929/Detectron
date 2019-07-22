@@ -77,12 +77,12 @@ def im_list_to_blob(ims):
     if not isinstance(ims, list):
         ims = [ims]
     max_shape = np.array([im.shape for im in ims]).max(axis=0)
-    # Pad the image so they can be divisible by a stride
+    # Pad the image so they can be divisible by a stride())
     if cfg.FPN.FPN_ON:
-        stride = float(cfg.FPN.COARSEST_STRIDE)
+        stride = float(cfg.FPN.COARSEST_STRIDE)        
         max_shape[0] = int(np.ceil(max_shape[0] / stride) * stride)
         max_shape[1] = int(np.ceil(max_shape[1] / stride) * stride)
-
+    
     num_images = len(ims)
     blob = np.zeros(
         (num_images, max_shape[0], max_shape[1], 3), dtype=np.float32
@@ -90,6 +90,10 @@ def im_list_to_blob(ims):
     for i in range(num_images):
         im = ims[i]
         blob[i, 0:im.shape[0], 0:im.shape[1], :] = im
+        '''print(im.shape)
+        print(max_shape[0],max_shape[1])
+        print(cfg.FPN.COARSEST_STRIDE)
+        print(float(cfg.FPN.COARSEST_STRIDE))'''
     # Move channels (axis 3) to axis 1
     # Axis order will become: (batch elem, channel, height, width)
     channel_swap = (0, 3, 1, 2)

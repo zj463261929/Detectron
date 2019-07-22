@@ -32,6 +32,7 @@ from utils.timer import Timer
 
 import utils.blob as blob_utils
 import utils.boxes as box_utils
+import utils.net as net_utils
 
 logger = logging.getLogger(__name__)
 
@@ -67,6 +68,7 @@ def _create_cell_anchors():
 
 def im_detect_bbox(model, im, timers=None):
     """Generate RetinaNet detections on a single image."""
+    #net_utils.print_net(model)
     if timers is None:
         timers = defaultdict(Timer)
     # Although anchors are input independent and could be precomputed,
@@ -117,7 +119,9 @@ def im_detect_bbox(model, im, timers=None):
         # candidate_ind is empty if we impose threshold 0.05 at all levels. This
         # will lead to errors since no detections are found for this image. Hence,
         # for lvl 7 which has small spatial resolution, we take the threshold 0.0
-        th = cfg.RETINANET.INFERENCE_TH if lvl < k_max else 0.0
+        th = cfg.RETINANET.INFERENCE_TH if lvl < k_max else 0.00
+        #print("th:{},lvl:{}".format(th,lvl))
+        #th=0.05
         candidate_inds = np.where(cls_prob_ravel > th)[0]
         if (len(candidate_inds) == 0):
             continue

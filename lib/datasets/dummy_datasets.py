@@ -45,3 +45,47 @@ def get_coco_dataset():
     ]
     ds.classes = {i: name for i, name in enumerate(classes)}
     return ds
+    
+def get_illbuild_class11_dataset():
+    """A dummy COCO dataset that includes only the 'classes' field."""
+    ds = AttrDict()
+    classes = ['__background__', 'autotruck', 'crane', 'forklift', 'mixerTruck', 'person',
+        'colorPlate', 'pit', 'bricksPile', 'mound', 'car'
+    ]
+
+    ds.classes = {i: name for i, name in enumerate(classes)}
+    return ds
+    
+def get_steal_oil_class10_dataset():
+    """A dummy COCO dataset that includes only the 'classes' field."""
+    ds = AttrDict()
+    classes = [
+        '__background__', 'autotruck', 'forklift', 'digger', 'car', 'bus','tanker', 'person','minitruck','minibus'
+    ]
+    ds.classes = {i: name for i, name in enumerate(classes)}
+    return ds
+
+def get_steal_oil_class14_dataset():
+    """A dummy COCO dataset that includes only the 'classes' field."""
+    ds = AttrDict()
+    classes = [
+        '__background__', 'suv', 'forklift', 'digger', 'car', 'bus','tanker', 'person','minitruck','minibus','truckbig','trucksmall','tricycle','bicycle'
+    ]
+    ds.classes = {i: name for i, name in enumerate(classes)}
+    return ds
+	
+def get_steal_oil_class2_dataset():
+    """A dummy COCO dataset that includes only the 'classes' field."""
+    ds = AttrDict()
+    classes = [
+        '__background__', 'person']
+    ds.classes = {i: name for i, name in enumerate(classes)}
+    return ds
+    
+def get_steal_oil_class3_dataset():
+    """A dummy COCO dataset that includes only the 'classes' field."""
+    ds = AttrDict()
+    classes = [
+        '__background__', 'tower', 'brickspile']
+    ds.classes = {i: name for i, name in enumerate(classes)}
+    return ds

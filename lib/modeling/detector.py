@@ -391,7 +391,8 @@ class DetectionModelHelper(cnn.CNNModelHelper):
         """ConvAffine adds a Conv op followed by a AffineChannel op (which
         replaces BN during fine tuning).
         """
-        conv_blob = self.Conv(
+        if group >1 :
+            conv_blob = self.GroupConv(
             blob_in,
             prefix,
             dim_in,
@@ -404,10 +405,31 @@ class DetectionModelHelper(cnn.CNNModelHelper):
             weight_init=weight_init,
             bias_init=bias_init,
             no_bias=1
-        )
+            )
+        else:
+            conv_blob = self.Conv(
+            blob_in,
+            prefix,
+            dim_in,
+            dim_out,
+            kernel,
+            stride=stride,
+            pad=pad,
+            group=group,
+            dilation=dilation,
+            weight_init=weight_init,
+            bias_init=bias_init,
+            no_bias=1
+            )
+        
+        
+
         blob_out = self.AffineChannel(
             conv_blob, prefix + suffix, dim=dim_out, inplace=inplace
         )
+        
+        #blob_out = conv_blob
+        #blob_out = self.SpatialBN(conv_blob, prefix + suffix+'1',dim_in=dim_out,is_test=False)
         return blob_out
 
     def DisableCudnn(self):
