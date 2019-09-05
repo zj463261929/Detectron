@@ -57,7 +57,10 @@ for i in xrange(len(files)):
     basename = os.path.splitext(file)[0]
     print basename
     #print i, len(files)
-            
+    
+    if os.path.exists(pro_save_xml_dir+basename+".xml"): #增量处理
+        continue
+        
     if os.path.exists(orig_img_dir+basename+".jpg") and os.path.exists(orig_xml_dir+basename+".xml"): #只处理该文件夹下面有的文件
         dom = xml.dom.minidom.parse(pro_orig_xml_dir+basename+".xml") #用于打开一个xml文件，并将这个文件对象dom变量。
         root = dom.documentElement #用于得到dom对象的文档元素，并把获得的对象给root
